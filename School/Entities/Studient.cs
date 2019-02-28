@@ -7,7 +7,7 @@ namespace CoreSchool.Entities
     {
         public string UniqueId { get; private set; }
         public string Name { get; set; }
-        public List<Test> Test{ get; set; }
+        public List<Test> Test{ get; set; } = new List<Test>();
 
         public Studient() => UniqueId = Guid.NewGuid().ToString();
     }
