@@ -3,12 +3,8 @@ using System.Collections.Generic;
 
 namespace CoreSchool.Entities
 {
-    public class Studient
+    public class Studient : BaseSchoolObject
     {
-        public string UniqueId { get; private set; }
-        public string Name { get; set; }
         public List<Test> Test{ get; set; } = new List<Test>();
-
-        public Studient() => UniqueId = Guid.NewGuid().ToString();
     }
 }
