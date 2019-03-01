@@ -5,7 +5,7 @@ using CoreSchool.Entities;
 
 namespace CoreSchool
 {
-    public class SchoolEngine
+    public sealed class SchoolEngine
     {
         public School School { get; set; }
 
