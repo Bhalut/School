@@ -9,6 +9,6 @@ namespace CoreSchool.Entities
 
         public BaseSchoolObject() => UniqueId = Guid.NewGuid().ToString();
 
-        public override string ToString() => $"{Name},{UniqueId}";
+        public override string ToString() => $"{Name}, {UniqueId}";
     }
 }
