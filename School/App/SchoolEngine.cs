@@ -17,7 +17,60 @@ namespace CoreSchool
             LoadTest();
         }
 
-        private void LoadTest()
+        private List<Studient> GeneratorStudients(int size)
+        {
+            string[] _name1 = { "Alba", "Felipa", "Eusebio", "Farid", "Donald", "Alvaro", "Nicolás" };
+            string[] _lastName1 = { "Ruiz", "Sarmiento", "Uribe", "Maduro", "Trump", "Toledo", "Herrera" };
+            string[] _name2 = { "Freddy", "Anabel", "Rick", "Murty", "Silvana", "Diomedes", "Nicomedes", "Teodoro" };
+
+            var listStudients = from n1 in _name1 from n2 in _name2 from a1 in _lastName1
+                                select new Studient { Name = $"{n1} {n2} {a1}" };
+
+            return listStudients.OrderBy((studient) => studient.UniqueId).Take(size).ToList();
+        }
+
+        public List<BaseSchoolObject> GetBaseSchools()
+        {
+            var listObject = new List<BaseSchoolObject>();
+            listObject.Add(School);
+            listObject.AddRange(School.Courses);
+
+            foreach (var course in School.Courses)
+            {
+                listObject.AddRange(course.Asignatures);
+                listObject.AddRange(course.Studients);
+
+                foreach (var studient in course.Studients)
+                {
+                    listObject.AddRange(studient.Test);
+                }
+            }
+
+            return listObject;
+        }
+
+        #region loading methods
+        private void LoadCourse()
+        {
+            School.Courses = new List<Course>
+            {
+                new Course{Name = "101", Types = TypesWorkingDay.Morning},
+                new Course{Name = "201", Types = TypesWorkingDay.Morning},
+                new Course{Name = "301", Types = TypesWorkingDay.Morning},
+                new Course{Name = "401", Types = TypesWorkingDay.Late},
+                new Course{Name = "501", Types = TypesWorkingDay.Late}
+            };
+
+            Random rmd = new Random();
+
+            foreach (var course in School.Courses)
+            {
+                int sizeRandom = rmd.Next(5, 20);
+                course.Studients = GeneratorStudients(sizeRandom);
+            }
+        }
+
+         private void LoadTest()
         {
             foreach (var course in School.Courses)
             {
@@ -48,47 +101,14 @@ namespace CoreSchool
             {
                 var listAsignatures = new List<Asignature>()
                 {
-                            new Asignature{Name = "Maths"} ,
-                            new Asignature{Name = "Sport"},
-                            new Asignature{Name = "Lenguages"},
-                            new Asignature{Name = "Sciences"}
+                    new Asignature{Name = "Maths"} ,
+                    new Asignature{Name = "Sport"},
+                    new Asignature{Name = "Lenguages"},
+                    new Asignature{Name = "Sciences"}
                 };
                 course.Asignatures = listAsignatures;
             }
         }
-
-        private List<Studient> GeneratorStudients(int size)
-        {
-            string[] _name1 = { "Alba", "Felipa", "Eusebio", "Farid", "Donald", "Alvaro", "Nicolás" };
-            string[] _lastName1 = { "Ruiz", "Sarmiento", "Uribe", "Maduro", "Trump", "Toledo", "Herrera" };
-            string[] _name2 = { "Freddy", "Anabel", "Rick", "Murty", "Silvana", "Diomedes", "Nicomedes", "Teodoro" };
-
-            var listStudients =  from n1 in _name1
-                                from n2 in _name2
-                                from a1 in _lastName1
-                                select new Studient{ Name = $"{n1} {n2} {a1}" };
-            
-            return listStudients.OrderBy( (studient)=> studient.UniqueId ).Take(size).ToList();
-        }
-
-        private void LoadCourse()
-        {
-            School.Courses = new List<Course>
-            {
-                new Course{Name = "101", Types = TypesWorkingDay.Morning},
-                new Course{Name = "201", Types = TypesWorkingDay.Morning},
-                new Course{Name = "301", Types = TypesWorkingDay.Morning},
-                new Course{Name = "401", Types = TypesWorkingDay.Late},
-                new Course{Name = "501", Types = TypesWorkingDay.Late}
-            };
-
-            Random rmd = new Random();
-            
-            foreach (var course in School.Courses)
-            {
-                int sizeRandom = rmd.Next(5, 20);
-                course.Studients = GeneratorStudients(sizeRandom);
-            }
-        }
+        #endregion
     }
 }
