@@ -66,11 +66,11 @@ namespace CoreSchool
                 var promStudient = from Test test in asigforTest.Value
                                    group test by new {test.Studient.UniqueId, test.Studient.Name}
                                    into groupTestforStudient
-                                   select new
+                                   select new AverageStudient
                                    {
-                                       StudientName = groupTestforStudient.Key.Name,
-                                       StudientID = groupTestforStudient.Key.UniqueId,
-                                       Prom = groupTestforStudient.Average(test => test.Calification)
+                                       name = groupTestforStudient.Key.Name,
+                                       studientID = groupTestforStudient.Key.UniqueId,
+                                       average = groupTestforStudient.Average(test => test.Calification)
 
                                    };
                 answer.Add(asigforTest.Key, promStudient);
