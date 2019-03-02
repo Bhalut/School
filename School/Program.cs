@@ -11,24 +11,26 @@ namespace CoreSchools
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.ProcessExit += EventAction;
+
             var engine = new SchoolEngine();
             engine.Init();
             Printer.WriteTitle("WELCOME TO SCHOOL");
             Console.WriteLine(engine.School);
 
-            PrintCourseSchool(engine.School);
+            var dictionary = engine.GetObjectDictionary();
+            engine.PrintDictionary(dictionary, true);
+        }
 
-            var listObject = engine.GetBaseSchools();
-            var listIPlace = from obj in listObject where obj is IPlace 
-                             select (IPlace)obj;
-
-            engine.School.ClearPlace();
+        private static void EventAction(object sender, EventArgs e)
+        {
+            Printer.WriteTitle("Exit");
         }
 
         private static void PrintCourseSchool(School school)
         {
             Printer.WriteTitle("Courses Of School");
-            
+
             if (school?.Courses != null)
             {
                 foreach (var course in school.Courses)
