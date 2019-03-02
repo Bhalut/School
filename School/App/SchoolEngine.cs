@@ -5,7 +5,7 @@ using System.Linq;
 using CoreSchool.Entities;
 using CoreSchool.Util;
 
-namespace CoreSchool
+namespace CoreSchool.App
 {
     public sealed class SchoolEngine
     {
