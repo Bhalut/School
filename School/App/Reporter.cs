@@ -68,7 +68,7 @@ namespace CoreSchool
                                    into groupTestforStudient
                                    select new AverageStudient
                                    {
-                                       name = groupTestforStudient.Key.Name,
+                                       studientName = groupTestforStudient.Key.Name,
                                        studientID = groupTestforStudient.Key.UniqueId,
                                        average = groupTestforStudient.Average(test => test.Calification)
 
